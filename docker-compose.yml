@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ./nestjs-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=1234
+      - DATABASE_NAME=carsharing
+    volumes:
+      - ./nestjs-service:/app
+    
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: carsharing
+    ports:
+      - "5432:5432"
